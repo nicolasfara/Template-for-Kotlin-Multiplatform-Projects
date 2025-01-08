@@ -187,3 +187,8 @@ tasks.withType<KotlinCompilationTask<*>>().configureEach {
         allWarningsAsErrors = !name.contains("test", ignoreCase = true)
     }
 }
+
+// Workaround for https://github.com/kotest/kotest/issues/4647
+tasks.matching { "wasmJsD8Test" in it.name }.configureEach {
+    enabled = false
+}
