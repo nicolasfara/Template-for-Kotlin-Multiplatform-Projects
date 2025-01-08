@@ -1,3 +1,12 @@
+## [0.2.5](https://github.com/DanySK/template-for-kotlin-multiplatform-projects/compare/0.2.4...0.2.5) (2025-01-08)
+
+### Dependency updates
+
+* **core-deps:** update kotlin monorepo to v2.1.0 ([#663](https://github.com/DanySK/template-for-kotlin-multiplatform-projects/issues/663)) ([f881893](https://github.com/DanySK/template-for-kotlin-multiplatform-projects/commit/f881893ee33107a71ae962d96af2068ebdf00f96))
+* **deps:** update plugin kotlin-qa to v0.77.1 ([#671](https://github.com/DanySK/template-for-kotlin-multiplatform-projects/issues/671)) ([cd7a599](https://github.com/DanySK/template-for-kotlin-multiplatform-projects/commit/cd7a599c849089180d2269e32d3b6432b244db1e))
+* **deps:** update plugin kotlin-qa to v0.78.0 ([#679](https://github.com/DanySK/template-for-kotlin-multiplatform-projects/issues/679)) ([9436fd6](https://github.com/DanySK/template-for-kotlin-multiplatform-projects/commit/9436fd6aa2d56a01c71ea4adf53af5565b50dbfc))
+* **deps:** update plugin publishoncentral to v7.0.5-dev0w-f7d1ad3 ([#697](https://github.com/DanySK/template-for-kotlin-multiplatform-projects/issues/697)) ([4ee0167](https://github.com/DanySK/template-for-kotlin-multiplatform-projects/commit/4ee0167f82a7a8def8d18b0ceb36c9bcae32f963))
+
 ## [0.2.4](https://github.com/DanySK/template-for-kotlin-multiplatform-projects/compare/0.2.3...0.2.4) (2025-01-08)
 
 ### Dependency updates
