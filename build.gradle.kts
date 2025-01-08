@@ -1,6 +1,7 @@
 import org.danilopianini.gradle.mavencentral.JavadocJar
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
     alias(libs.plugins.dokka)
@@ -177,5 +178,12 @@ publishing {
                 artifact(tasks.javadocJar)
             }
         }
+    }
+}
+
+// Workaround for https://github.com/kotest/kotest/issues/4521 (fixed but not released)
+tasks.withType<KotlinCompilationTask<*>>().configureEach {
+    compilerOptions {
+        allWarningsAsErrors = !name.contains("test", ignoreCase = true)
     }
 }
