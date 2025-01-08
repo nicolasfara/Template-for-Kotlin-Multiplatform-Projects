@@ -1,3 +1,9 @@
+## [0.2.6](https://github.com/DanySK/template-for-kotlin-multiplatform-projects/compare/0.2.5...0.2.6) (2025-01-08)
+
+### Bug Fixes
+
+* save the repo ID in CI ([9f507f8](https://github.com/DanySK/template-for-kotlin-multiplatform-projects/commit/9f507f884170a92d1d0e9261a6c5ed3f00689edc))
+
 ## [0.2.5](https://github.com/DanySK/template-for-kotlin-multiplatform-projects/compare/0.2.4...0.2.5) (2025-01-08)
 
 ### Dependency updates
