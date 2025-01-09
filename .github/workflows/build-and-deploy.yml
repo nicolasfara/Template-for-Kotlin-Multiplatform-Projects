@@ -41,32 +41,22 @@ jobs:
       - check-secrets
     if: ${{ needs.check-secrets.outputs.run-with-secrets == 'true' }}
     outputs:
-      staging-repo-id: ${{ steps.set-staging-repo-id.outputs.MavenCentral }}
+      staging-repo-id: ${{ steps.create-staging-repo.outputs.staging-repo-id }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
+      - id: create-staging-repo
+        name: Create a staging repository
+        uses: danysk/action-create-ossrh-staging-repo@1.0.0
         with:
-          fetch-depth: 0
-      - uses: DanySK/build-check-deploy-gradle-action@3.5.28
-        id: staging-repo
-        with:
-          should-deploy: true
-          deploy-command: |
-            ./gradlew createStagingRepositoryOnMavenCentral --parallel
-          should-run-codecov: false
+          group-id: "org.danilopianini"
           maven-central-username: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           maven-central-password: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
-      - name: Set staging repository ID
-        id: set-staging-repo-id
-        run:
-          cat build/staging-repo-ids.properties >> $GITHUB_OUTPUT
 
   build:
     needs:
       - check-secrets
       - staging-repo
       - precompute-next-version
-    if: always() && !contains(needs.precompute-next-version.result, 'failure')
+    if: always() && !(contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled'))
     strategy:
       fail-fast: false
       matrix:
@@ -156,14 +146,11 @@ jobs:
       - staging-repo
       - release
     runs-on: ubuntu-24.04
-    if: always()
+    if: always() && !(contains(needs.staging-repo.result, 'failure') || contains(needs.staging-repo.result, 'cancelled'))
     steps:
-      - run: >
-          curl
-          --request POST
-          --url "https://s01.oss.sonatype.org/service/local/staging/bulk/drop"
-          --header "Accept: application/json"
-          --header "Content-Type: application/json"
-          --data '{"data":{"stagedRepositoryIds":["${{ needs.staging-repo.outputs.staging-repo-id }}"]}}'
-          --user "${{ secrets.MAVEN_CENTRAL_USERNAME }}:${{ secrets.MAVEN_CENTRAL_PASSWORD }}"
-          --verbose
+      - name: Drop staging repository
+        uses: danysk/action-drop-ossrh-staging-repo@1.0.0
+        with:
+          repo-id: ${{ needs.staging-repo.outputs.staging-repo-id }}
+          maven-central-username: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          maven-central-password: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
